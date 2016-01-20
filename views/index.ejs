@@ -1,11 +1,27 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
   <head>
     <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel="stylesheet" href="/static/stylesheets/style.css" />
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/angular.min.js"></script>
   </head>
   <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
+  	<div ng-app="myApp" ng-controller="myCtrl">
+  		<button ng-click="call()">TEST</button>
+  		<div>{{name}}</div> 
+  	</div>
+  	<script>
+  	var app = angular.module("myApp",[]);
+  	app.controller("myCtrl", function($scope, $http){
+  		$scope.call = function(){
+  			$http.get("/mongo").success(function(res){
+  				$.each(res, function(i){
+  					console.log($(this)[0].name);
+  				});
+  			});
+  		}
+  	});
+  	</script>
   </body>
 </html>
