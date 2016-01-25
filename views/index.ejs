@@ -1,56 +1,30 @@
 <!DOCTYPE html>
 <html lang="ko">
-  <head>
-    <title><%= title %></title>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/static/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="/static/css/font-awesome.min.css" />
-    <link rel="stylesheet" href="/static/css/style.css" />
-  </head>
-  <body>
-  	<div class="container-fluid" id="main">
-  		<div class="row row-offcanvas row-offcanvas-left">
-  			<div class="col-md-12 col-lg-12 main">
-  				<div class="row">
-				  	<div class="col-lg-12">
-				        <div id="accordion" role="tablist" aria-multiselectable="true">
-				        	<div class="card">
-				            	<div class="card-header" role="tab" id="headingOne">
-				                	<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-				                  		Collapsible Group Item #1
-				                	</a>
-				            	</div>
-				            	<div id="collapseOne" class="card-block collapse in" role="tabpanel" aria-labelledby="headingOne">
-				                	<p>This is a Bootstrap 4 accordion that uses the <code>.card</code> classes instead of <code>.panel</code>. The single-open section aspect is not working because the parent option (dependent on .panel) has not yet been finalized in BS 4 alpha. </p>
-				            	</div>
-				            	<div class="card-header" role="tab" id="headingTwo">
-				                	<a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-				                  		Collapsible Group Item #2
-				                	</a>
-				            	</div>
-				            	<div id="collapseTwo" class="card-block collapse" role="tabpanel" aria-labelledby="headingTwo">
-				               		<p>Just like it's predecesor, Bootstrap 4 is mobile-first so that you start by designing for smaller devices such as smartphones and tablets, then proceed to laptop and desktop layouts.</p>
-				            	</div>
-				            	<div class="card-header" role="tab" id="headingThree">
-				                	<a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-				                  		Collapsible Group Item #3
-				                	</a>
-				            	</div>
-				            	<div id="collapseThree" class="card-block collapse" role="tabpanel" aria-labelledby="headingThree">
-				                	<p>Bootstrap employs a handful of important global styles and settings that you’ll need to be aware of when using it, all of which are almost exclusively geared towards the normalization of cross browser styles.</p>
-				            	</div>
-				        	</div>
-				        	
-				        	<a href="javascript:;" class="btn btn-info btn-block">Read More</a>
-				        </div>
-				    </div>
-			    </div>
-		    </div>
-	    </div>
-	</div>
-    <script src="/static/js/jquery.min.js"></script>
-    <script src="/static/js/angular.min.js"></script>
-    <script src="/static/js/bootstrap.min.js"></script>
-  </body>
+  	<head>
+	    <title><%= title %></title>
+	    <meta charset="utf-8" />
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	    <link rel="stylesheet" href="/static/css/bootstrap.min.css" />
+	    <link rel="stylesheet" href="/static/css/font-awesome.min.css" />
+	    <link rel="stylesheet" href="/static/css/style.css" />
+	    <base href="/" />
+	</head>
+	<body>
+	  	<div class="container-fluid" id="main" ng-app="boardApp">
+	  		<div class="row row-offcanvas row-offcanvas-left">
+	  			<div class="col-lg-12 col-md-12 form-group">
+  					<a href="{{buttonPath}}" class="btn btn-primary">{{buttonName}}</a>
+	  			</div>
+				<div class="col-md-12 col-lg-12 main" ng-view>
+				</div>
+			</div>
+		</div>
+    	<script src="/static/js/lib/jquery.min.js"></script>
+    	<script src="/static/js/lib/angular.min.js"></script>
+    	<script src="/static/js/lib/angular-route.min.js"></script>
+    	<script src="/static/js/lib/bootstrap.min.js"></script>
+    	<script src="/static/js/app.js"></script>
+    	<script src="/static/js/controller/BoardListController.js"></script>
+    	<script src="/static/js/controller/BoardWriteController.js"></script>
+    </body>
 </html>
