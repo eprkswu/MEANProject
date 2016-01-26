@@ -54,9 +54,11 @@ boardApp.controller('BoardWriteCtrl', function($scope, $http, $location){
 				ff_textarea_val = $('#content').val();
 				
 				checkByte($('#content').val(), 200);
-				
-				window.setTimeout($scope.contentKeyDown(), 100);
 			}
+			
+			window.setTimeout(function(){
+				$scope.contentKeyDown();
+			}, 300);
 		}
 	};
 
