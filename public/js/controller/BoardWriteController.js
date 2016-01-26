@@ -41,12 +41,18 @@ boardApp.controller('BoardWriteCtrl', function($scope, $http, $location){
 			},100);
 		}
 		
-		$scope.contentByteCheck();
+		if(window.navigator.userAgent.toLowerCase().indexOf('Firefox') <= 0){
+			checkByte($('#content').val(), 200);
+		}
 	};
 	
 	var ff_textarea_val = '';
+<<<<<<< HEAD
 	$scope.contentByteCheck = function(){
 console.log(123121);
+=======
+	$scope.contentKeyDown = function(){
+>>>>>>> 90ddf36bc0296d3b68a6126d14b759217531dab4
 		if(window.navigator.userAgent.toLowerCase().indexOf('Firefox') > -1){
 			if($('#content').val() != ff_textarea_val){
 				ff_textarea_val = $('#content').val();
@@ -55,8 +61,6 @@ console.log(123121);
 				
 				window.setTimeout($scope.contentByteCheck(), 100);
 			}
-		}else{
-			checkByte($('#content').val(), 200);
 		}
 	};
 
