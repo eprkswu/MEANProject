@@ -44,10 +44,19 @@ boardApp.controller('BoardWriteCtrl', function($scope, $http, $location){
 		$scope.contentByteCheck();
 	};
 	
+	var ff_textarea_val = '';
 	$scope.contentByteCheck = function(){
-		setTimeout(function(){
+		if(window.navigator.userAgent.toLowerCase().indexOf('Firefox') > -1){
+			if($('#content').val() != ff_textarea_val){
+				ff_textarea_val = $('#content').val();
+				
+				checkByte($('#content').val(), 200);
+				
+				window.setTimeout($scope.contentByteCheck(), 100);
+			}
+		}else{
 			checkByte($('#content').val(), 200);
-		},100);
+		}
 	};
 
 	var init = function(){
