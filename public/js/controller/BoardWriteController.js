@@ -55,7 +55,7 @@ boardApp.controller('BoardWriteCtrl', function($scope, $http, $location){
 				
 				checkByte($('#content').val(), 200);
 				
-				window.setTimeout($scope.contentByteCheck(), 100);
+				window.setTimeout($scope.contentKeyDown(), 100);
 			}
 		}
 	};
