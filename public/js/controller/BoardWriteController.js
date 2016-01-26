@@ -49,6 +49,7 @@ boardApp.controller('BoardWriteCtrl', function($scope, $http, $location){
 	var ff_textarea_val = '';
 	$scope.contentKeyDown = function(){
 		if(window.navigator.userAgent.toLowerCase().indexOf('firefox') > -1){
+			console.log(ff_textarea_val);
 			if($('#content').val() != ff_textarea_val){
 				ff_textarea_val = $('#content').val();
 				
