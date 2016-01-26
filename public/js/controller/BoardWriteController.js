@@ -6,6 +6,7 @@ boardApp.controller('BoardWriteCtrl', function($scope, $http, $location){
 		$event.preventDefault();
 		
 		var formData = {
+			title:$scope.title,
 			content:$scope.content
 		}
 		
