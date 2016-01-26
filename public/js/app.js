@@ -17,5 +17,16 @@ boardApp.config(function($routeProvider, $locationProvider){
 			redirectTo:'/'
 		});
 	
-	$locationProvider.html5Mode(true);
+	$locationProvider.html5Mode(false);
+	$locationProvider.hashPrefix('!');
+}).directive('krTextarea', function($parse){
+	return {
+		priority:2,
+		restrict:'A',
+		compile:function(element){
+			element.on('compositionstart',function(e){
+				e.stopImmediatePropagation();
+			});
+		}
+	}
 });

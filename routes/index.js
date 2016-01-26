@@ -18,4 +18,12 @@ router.get('/mongo', function(req, res, next){
 	});
 });
 
+router.post('/test', function(req, res, next){
+	console.log(req.body.content);
+	var obj = {};
+	obj.code = 200;
+	obj.message = 'success';
+	res.send(obj);
+});
+
 module.exports = router;
