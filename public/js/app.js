@@ -24,7 +24,7 @@ boardApp.config(function($routeProvider, $locationProvider){
 		priority:2,
 		restrict:'A',
 		compile:function(element){
-			element.on('compositionstart',function(e){
+			element.on('compositionstart compositionend',function(e){
 				e.stopImmediatePropagation();
 			});
 		}
