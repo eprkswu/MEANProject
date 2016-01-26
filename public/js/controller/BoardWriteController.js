@@ -1,5 +1,5 @@
 boardApp.controller('BoardWriteCtrl', function($scope, $http, $location){
-	$scope.$parent.buttonName = '저 장';
+	$scope.$parent.buttonName = '저장';
 	$scope.$parent.isWrite = true;
 
 	$scope.$parent.clickButton = function($event){
@@ -48,7 +48,7 @@ boardApp.controller('BoardWriteCtrl', function($scope, $http, $location){
 	
 	var ff_textarea_val = '';
 	$scope.contentKeyDown = function(){
-		if(window.navigator.userAgent.toLowerCase().indexOf('Firefox') > -1){
+		if(window.navigator.userAgent.toLowerCase().indexOf('firefox') > -1){
 			if($('#content').val() != ff_textarea_val){
 				ff_textarea_val = $('#content').val();
 				
