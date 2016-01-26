@@ -47,16 +47,22 @@ boardApp.controller('BoardWriteCtrl', function($scope, $http, $location){
 	};
 	
 	var ff_textarea_val = '';
+	var ff_textarea_timeout = null;
 	$scope.contentKeyDown = function(){
 		if(window.navigator.userAgent.toLowerCase().indexOf('firefox') > -1){
 			console.log(ff_textarea_val);
+			
+			if(null != ff_textarea_timeout){
+				clearTimeout(ff_textarea_timeout);
+			}
+			
 			if($('#content').val() != ff_textarea_val){
 				ff_textarea_val = $('#content').val();
 				
 				checkByte($('#content').val(), 200);
 			}
 			
-			window.setTimeout(function(){
+			ff_textarea_timeout = window.setTimeout(function(){
 				$scope.contentKeyDown();
 			}, 300);
 		}
