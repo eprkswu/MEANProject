@@ -41,11 +41,13 @@ boardApp.controller('BoardWriteCtrl', function($scope, $http, $location){
 			},100);
 		}
 		
-		$scope.contentByteCheck();
+		if(window.navigator.userAgent.toLowerCase().indexOf('Firefox') <= 0){
+			checkByte($('#content').val(), 200);
+		}
 	};
 	
 	var ff_textarea_val = '';
-	$scope.contentByteCheck = function(){
+	$scope.contentKeyDown = function(){
 		if(window.navigator.userAgent.toLowerCase().indexOf('Firefox') > -1){
 			if($('#content').val() != ff_textarea_val){
 				ff_textarea_val = $('#content').val();
@@ -54,8 +56,6 @@ boardApp.controller('BoardWriteCtrl', function($scope, $http, $location){
 				
 				window.setTimeout($scope.contentByteCheck(), 100);
 			}
-		}else{
-			checkByte($('#content').val(), 200);
 		}
 	};
 
