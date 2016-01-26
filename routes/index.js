@@ -11,10 +11,19 @@ router.get('/', function(req, res, next) {
 router.get('/mongo', function(req, res, next){
 	var data = '';
 	client.connect('mongodb://54.249.83.123:27017/newDB', function(err, db){
-		var cursor = db.collection('users').find();
+		
+		var doc = db.collection('users');
+		var cursor = doc.find();
+		
+		doc.count(function(err, count){
+			console.log(count);
+		});
+		
 		cursor.toArray(function(err, items){
 			res.send(items);
 		});
+		
+		//db.close();
 	});
 });
 

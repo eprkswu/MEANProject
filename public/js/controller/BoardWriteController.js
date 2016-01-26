@@ -51,8 +51,6 @@ boardApp.controller('BoardWriteCtrl', function($scope, $http, $location){
 	var ff_textarea_timeout = null;
 	$scope.contentKeyDown = function(){
 		if(window.navigator.userAgent.toLowerCase().indexOf('firefox') > -1){
-			console.log(ff_textarea_val);
-			
 			if(null != ff_textarea_timeout){
 				clearTimeout(ff_textarea_timeout);
 			}
@@ -78,7 +76,7 @@ boardApp.controller('BoardWriteCtrl', function($scope, $http, $location){
 					checkByte(tempContent, 200);
 				}
 				
-				window.localStorage.removeItem('tempContent');
+				//window.localStorage.removeItem('tempContent');
 			}
 		}
 		
