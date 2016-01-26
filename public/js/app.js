@@ -19,14 +19,4 @@ boardApp.config(function($routeProvider, $locationProvider){
 	
 	$locationProvider.html5Mode(false);
 	$locationProvider.hashPrefix('!');
-}).directive('krTextarea', function($parse){
-	return {
-		priority:2,
-		restrict:'A',
-		compile:function(element){
-			element.on('compositionstart compositionend',function(e){
-				e.stopImmediatePropagation();
-			});
-		}
-	}
 });

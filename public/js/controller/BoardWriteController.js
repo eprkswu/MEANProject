@@ -1,7 +1,6 @@
 boardApp.controller('BoardWriteCtrl', function($scope, $http, $location){
 	$scope.$parent.buttonName = '저장';
 	$scope.$parent.isWrite = true;
-	$scope.byteCount = 0;
 
 	$scope.$parent.clickButton = function($event){
 		$event.preventDefault();
@@ -48,7 +47,7 @@ boardApp.controller('BoardWriteCtrl', function($scope, $http, $location){
 	$scope.contentByteCheck = function(){
 		setTimeout(function(){
 			checkByte($('#content').val(), 200);
-		},0);
+		},100);
 	};
 
 	var init = function(){
@@ -103,14 +102,11 @@ boardApp.controller('BoardWriteCtrl', function($scope, $http, $location){
 			}
 		}
 		
-		console.log(str);
-		console.log(return_byte);
-
 		if(return_byte > maxByte){
 			return_str = str.substr(0, return_length);
 			$scope.content = return_str;
 		}else{
-			$scope.byteCount = return_byte;
+			$('.byte_count').text(return_byte);
 		}
 	};
 	
