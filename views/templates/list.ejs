@@ -5,7 +5,7 @@
             	<div class="card-header" role="tab" id="headingOne">
             		<div class="pull-right">
             			<a class="label label-info label-fill">Update</a>
-            			<a class="label label-danger label-fill">Delete</a>
+            			<a ng-click='toggleModal()' class="label label-danger label-fill">Delete</a>
             		</div>
                 	<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne" onclick="return false;">
                   		Collapsible Group Item #1
@@ -17,7 +17,7 @@
             	<div class="card-header" role="tab" id="headingTwo">
             		<div class="pull-right">
             			<a class="label label-info label-fill">Update</a>
-            			<a class="label label-danger label-fill">Delete</a>
+            			<a ng-click='toggleModal()' class="label label-danger label-fill">Delete</a>
             		</div>
                 	<a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" onclick="return false;">
                   		Collapsible Group Item #2
@@ -29,7 +29,7 @@
             	<div class="card-header" role="tab" id="headingThree">
             		<div class="pull-right">
             			<a class="label label-info label-fill">Update</a>
-            			<a class="label label-danger label-fill">Delete</a>
+            			<a ng-click='toggleModal()' class="label label-danger label-fill">Delete</a>
             		</div>
                 	<a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree" onclick="return false;">
                   		Collapsible Group Item #3
@@ -44,3 +44,9 @@
         </div>
     </div>
 </div>
+
+
+<modal-dialog show='modalShown' width='750px' height='60%'>
+	<p>정말 삭제 할까요?<p> <br>
+	<a href="/">네</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="" >아니요</a>
+</modal-dialog>

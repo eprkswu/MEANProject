@@ -6,4 +6,9 @@ boardApp.controller('BoardListCtrl', function($scope, $location){
 		$event.preventDefault();
 		$location.path('/write').replace();
 	};
+
+	$scope.modalShown = false;
+	$scope.toggleModal = function() {
+		$scope.modalShown = !$scope.modalShown;
+	};
 });
