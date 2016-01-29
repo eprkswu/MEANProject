@@ -66,6 +66,14 @@ boardApp.controller('BoardWriteCtrl', function($scope, $http, $location){
 			}, 300);
 		}
 	};
+	
+	$scope.uploadFile = function($event){
+		$event.preventDefault();
+		
+		var frm = document.frmUploadFile;
+		frm.target = 'ifrmUploadFile';
+		frm.submit();
+	};
 
 	var init = function(){
 		if(typeof(Storage) != 'undefined'){
