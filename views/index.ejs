@@ -8,12 +8,16 @@
 	    <link rel="stylesheet" href="/static/css/font-awesome.min.css" />
 	    <link rel="stylesheet" href="/static/css/style.css" />
 	    <base href="/" />
+	    <script>
+	    document.domain = "bettyvelvet.me";
+	    </script>
 	</head>
 	<body>
 	  	<div class="container-fluid" id="main" ng-app="boardApp">
 	  		<div class="row row-offcanvas row-offcanvas-left">
 	  			<div class="col-lg-12 col-md-12 form-group">
-  					<a href="{{buttonPath}}" class="btn btn-primary">{{buttonName}}</a>
+  					<a href="#" ng-click="clickButton($event);" class="btn btn-primary">{{buttonName}}</a>
+  					<a href="#" ng-click="list($event);" ng-show="isWrite" class="btn">목록</a>
 	  			</div>
 				<div class="col-md-12 col-lg-12 main" ng-view>
 				</div>
@@ -26,5 +30,6 @@
     	<script src="/static/js/app.js"></script>
     	<script src="/static/js/controller/BoardListController.js"></script>
     	<script src="/static/js/controller/BoardWriteController.js"></script>
+		<script src="/static/js/controller/BoardDeleteController.js"></script>
     </body>
 </html>
