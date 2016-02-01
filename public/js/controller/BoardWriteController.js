@@ -1,4 +1,4 @@
-boardApp.controller('BoardWriteCtrl', function($scope, $http, $location){
+boardApp.controller('BoardWriteCtrl', function($scope, $http, $routeParams, $location){
 	$scope.$parent.buttonName = '저장';
 	$scope.$parent.isWrite = true;
 
@@ -7,7 +7,8 @@ boardApp.controller('BoardWriteCtrl', function($scope, $http, $location){
 		
 		var formData = {
 			title:$scope.title,
-			content:$scope.content
+			content:$scope.content,
+			name:$scope.name
 		}
 		
 		$http({
@@ -76,15 +77,31 @@ boardApp.controller('BoardWriteCtrl', function($scope, $http, $location){
 	};
 
 	var init = function(){
-		if(typeof(Storage) != 'undefined'){
-			var tempContent = window.localStorage.getItem('tempContent');
-			if(tempContent != null && $.trim(tempContent) != ''){
-				if(confirm('작성중인 내용이 있습니다.\n이어서 작성 하시겠습니까?')){
-					$scope.content = tempContent;
-					checkByte(tempContent, 200);
+		if(typeof($routeParams.id) != "undefined"){
+			$http({
+				method:'GET',
+				url:'/board_detail.json',
+				params:{seq:$routeParams.id}
+			}).success(function(data){
+				if(data.length > 0){
+					var detail_content = data[0];
+					
+					$scope.title = detail_content.title;
+					$scope.content = detail_content.content;
+					$scope.name = detail_content.name;
 				}
-				
-				//window.localStorage.removeItem('tempContent');
+			});
+		}else{
+			if(typeof(Storage) != 'undefined'){
+				var tempContent = window.localStorage.getItem('tempContent');
+				if(tempContent != null && $.trim(tempContent) != ''){
+					if(confirm('작성중인 내용이 있습니다.\n이어서 작성 하시겠습니까?')){
+						$scope.content = tempContent;
+						checkByte(tempContent, 200);
+					}
+					
+					//window.localStorage.removeItem('tempContent');
+				}
 			}
 		}
 		
