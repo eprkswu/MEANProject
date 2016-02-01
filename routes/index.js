@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
 var client = require('mongodb').MongoClient;
-var easyimg = require('easyimage');
 var path = require('path');
 var appRoot = require('app-root-path');
 
