@@ -6,7 +6,13 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
+var routes2 = require('./routes/index2');
+
+var board = require('./routes/board');
+
 var users = require('./routes/users');
+
+
 var templates = require('./routes/templates');
 
 var app = express();
@@ -24,6 +30,9 @@ app.use(cookieParser());
 app.use('/static', express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
+app.use('/', routes2);
+app.use('/', board);
+
 
 app.get('/template/:name', templates.template);
 
