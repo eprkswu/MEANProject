@@ -34,7 +34,7 @@ app.use('/', routes2);
 app.use('/', board);
 
 
-app.get('/template/:name', templates.template);
+app.use('/template', templates);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
