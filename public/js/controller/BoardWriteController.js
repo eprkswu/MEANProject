@@ -8,7 +8,20 @@ boardApp.controller('BoardWriteCtrl', function($scope, $http, $routeParams, $loc
 		var formData = {
 			title:$scope.title,
 			content:$scope.content,
-			name:$scope.name
+			name:$scope.name,
+			files:[
+		       {
+		    	   original_url:'test',
+		    	   thumbnail_url_130:'test1',
+		    	   thumbnail_url_200:'test2',
+		    	   thumbnail_url_300:'test3'
+		       },
+		       {
+		    	   original_url:'test4',
+		    	   thumbnail_url_130:'test5',
+		    	   thumbnail_url_200:'test6',
+		    	   thumbnail_url_300:'test7'
+		       }]
 		}
 		
 		$http({
