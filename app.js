@@ -34,6 +34,8 @@ app.use('/', routes);
 app.use('/', routes2);
 app.use('/', board);
 
+app.use('/put',put);
+
 
 app.use('/template', templates);
 
