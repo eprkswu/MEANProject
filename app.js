@@ -12,6 +12,7 @@ var board = require('./routes/board');
 
 var users = require('./routes/users');
 
+var put = require('./routes/put');
 
 var templates = require('./routes/templates');
 
