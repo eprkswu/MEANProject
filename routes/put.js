@@ -40,5 +40,72 @@ router.post('/board', function(req, res, next){
 	});
 });
 
-module.exports = router;
+router.put('/board', function(req, res, next){
+	var data = req.body;
+	data.seq = parseInt(data.seq);
+	var seq = data.seq;
+	
+	var result_data = {};
+	
+	client.connect('mongodb://54.249.83.123:27017/newDB', function(err, db){
+		
+		var cursor = db.collection('board').findAndModify(
+			{seq:seq},
+			[],
+			{
+				$set:data
+			},
+			{},
+			function(err, result){
+				if(err != null){
+					result_data = {
+						code:500,
+						message:err.message,
+						desc:'UPDATE FAILED'
+					};
+				}else{
+					result_data = {
+						code:200,
+						message:'',
+						desc:'UPDATE SUCCESS'
+					};
+				}			
+				res.json(result_data);
+			}
+		);
+	});
+});
 
+router.delete('/board', function(res, res, next){
+	var data = req.body;
+	data.seq = parseInt(data.seq);
+	var seq = data.seq;
+	
+	var result_data = {};
+	
+	client.connect('mongodb://54.249.83.123:27017/newDB', function(err, db){
+		var cursor = db.collection('board').remove(
+			{
+				seq:seq
+			},
+			function(err, result){
+				if(err != null){
+					result_data = {
+						code:500,
+						message:err.message,
+						desc:'DELETE FAILED'
+					}
+				}else{
+					result_data = {
+						code:200,
+						message:'',
+						desc:'UPDATE_SUCCESS'
+					}
+				}
+				res.json(result_data);
+			}
+		);
+	});
+});
+
+module.exports = router;

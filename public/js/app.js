@@ -9,7 +9,7 @@ boardApp.config(function($routeProvider, $locationProvider){
 			templateUrl:'/template/list',
 			controller:'BoardListCtrl'
 		}).
-		when('/detail/:id',{
+		when('/detail/:seq',{
 			templateUrl:'/template/write',
 			controller:'BoardWriteCtrl'
 		}).

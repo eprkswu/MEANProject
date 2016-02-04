@@ -30,8 +30,16 @@ boardApp.controller('BoardWriteCtrl', function($scope, $http, $routeParams, $loc
 			files:files
 		}
 		
+		var method = '';
+		if(typeof($routeParams.seq) != "undefined"){
+			method = 'PUT';			
+			formData.seq = $routeParams.seq;
+		}else{
+			method = 'POST';			
+		}
+		
 		$http({
-			method:'POST',
+			method:method,
 			url:'/put/board',
 			data:formData
 		}).success(function(data){
@@ -42,6 +50,7 @@ boardApp.controller('BoardWriteCtrl', function($scope, $http, $routeParams, $loc
 						window.localStorage.removeItem('tempContent');
 					}
 				}
+				alert('저장이 완료 되었습니다.');
 				$location.path('/').replace();
 			}else{
 				alert('저장에 실패 하였습니다.\n'+data.message);
@@ -96,11 +105,11 @@ boardApp.controller('BoardWriteCtrl', function($scope, $http, $routeParams, $loc
 	};
 
 	var init = function(){
-		if(typeof($routeParams.id) != "undefined"){
+		if(typeof($routeParams.seq) != "undefined"){
 			$http({
 				method:'GET',
 				url:'/board_detail.json',
-				params:{seq:$routeParams.id}
+				params:{seq:$routeParams.seq}
 			}).success(function(data){
 				if(data.length > 0){
 					var detail_content = data[0];
@@ -108,6 +117,27 @@ boardApp.controller('BoardWriteCtrl', function($scope, $http, $routeParams, $loc
 					$scope.title = detail_content.title;
 					$scope.content = detail_content.content;
 					$scope.name = detail_content.name;
+					
+					var files = detail_content.files;
+					
+					$.each(files, function(i){
+						var file_data = files[i];
+						
+						$("input[type='file']:eq("+i+")").hide();
+		  				
+		  				$(".image_disp_layer:eq("+i+")").html("<img src=\""+file_data.thumbnail_url_130+"\" style=\"width:130;height:130\" />");
+		  				$(".image_disp_layer:eq("+i+")").attr("original_image",file_data.original_url);
+		  				$(".image_disp_layer:eq("+i+")").attr("thumbnail_image_130",file_data.thumbnail_url_130);
+		  				$(".image_disp_layer:eq("+i+")").attr("thumbnail_image_200",file_data.thumbnail_url_200);
+		  				$(".image_disp_layer:eq("+i+")").attr("thumbnail_image_300",file_data.thumbnail_url_300);
+		  				$(".image_disp_layer:eq("+i+")").show();
+					});
+					
+					$("input[type='file']").each(function(i){
+			  			if($(this).css("display") == "none"){
+			  				$(this).remove();
+			  			}
+			  		});
 				}
 			});
 		}else{
