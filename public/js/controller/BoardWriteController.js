@@ -5,28 +5,34 @@ boardApp.controller('BoardWriteCtrl', function($scope, $http, $routeParams, $loc
 	$scope.$parent.clickButton = function($event){
 		$event.preventDefault();
 		
+		var files = [];
+		
+		$('.image_disp_layer').each(function(i){
+			var _this = $(this);			
+			var file_data = {};
+			
+			if(_this.css('display') == 'block'){
+				file_data = {
+					original_url:_this.attr('original_image'),
+					thumbnail_url_130:_this.attr('thumbnail_image_130'),
+					thumbnail_url_200:_this.attr('thumbnail_image_200'),
+					thumbnail_url_300:_this.attr('thumbnail_image_300')
+				}
+				
+				files.push(file_data);
+			}
+		});
+		
 		var formData = {
 			title:$scope.title,
 			content:$scope.content,
 			name:$scope.name,
-			files:[
-		       {
-		    	   original_url:'test',
-		    	   thumbnail_url_130:'test1',
-		    	   thumbnail_url_200:'test2',
-		    	   thumbnail_url_300:'test3'
-		       },
-		       {
-		    	   original_url:'test4',
-		    	   thumbnail_url_130:'test5',
-		    	   thumbnail_url_200:'test6',
-		    	   thumbnail_url_300:'test7'
-		       }]
+			files:files
 		}
 		
 		$http({
 			method:'POST',
-			url:'/test',
+			url:'/put/board',
 			data:formData
 		}).success(function(data){
 			if(data.code == 200){
@@ -38,7 +44,7 @@ boardApp.controller('BoardWriteCtrl', function($scope, $http, $routeParams, $loc
 				}
 				$location.path('/').replace();
 			}else{
-				alert('저장에 실패 하였습니다.');
+				alert('저장에 실패 하였습니다.\n'+data.message);
 			}
 		});
 	};
