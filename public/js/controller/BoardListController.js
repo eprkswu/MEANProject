@@ -16,6 +16,8 @@ boardApp.controller('BoardListCtrl', function($scope, $http, $location, $compile
 		$event.preventDefault();
 		$location.path('/detail/'+seq).replace();
 	};
+
+	$scope.board_list = [];
 	
 	$scope.readMore = function($event){
 		$event.preventDefault();
@@ -32,33 +34,12 @@ boardApp.controller('BoardListCtrl', function($scope, $http, $location, $compile
 			url:'/board_list.json',
 			params:{start:seq}
 		}).success(function(data){
-			$scope.board_list = data.persons;
-			console.log(data.total_list);
-			console.log(data.persons.length);
+			$scope.board_list = $scope.board_list.concat(data.persons);
 			if(data.total_list > 5 && data.persons.length > 0){
 				$('#btnReadMore').show();
-			}else{
+			}else {
 				$('#btnReadMore').hide();
 			}
-			
-			var template = '<div ng-repeat="board in board_list">'; 
-			template += '<div class="card-header" role="tab" id="heading_{{$index}}" board-seq="{{board.seq}}">';
-			template += '<div class="pull-right"><a href="#" class="label label-info label-fill" ng-click="detail($event, board.seq)">Update</a>';
-			template += '<a ng-click="toggleModal()" class="label label-danger label-fill">Delete</a>';
-			template += '</div>';
-			template += '<a data-toggle="collapse" data-parent="#accordion" href="#collapse_{{$index}}" aria-expanded="false" aria-controls="collapse_{{$index}}" onclick="return false;">';
-			template += '{{board.title}}';
-			template += '</a>';
-			template += '</div>';
-			template += '<div id="collapse_{{$index}}" class="card-block collapse" role="tabpanel" aria-labelledby="heading_{{$index}}">';
-			template += '<p ng-bind-html="board.content | nl2br"></p>';
-			template += '<p>';
-			template += '<img ng-src="{{file.thumbnail_url_130}}" ng-repeat="file in board.files" ng-show="board.files.length > 0" />';
-			template += '</p>';
-			template += '</div>';
-			template += '</div>';
-			
-			$('#card_wrap').append($compile(template)($scope));
 		});
 	};
 	
