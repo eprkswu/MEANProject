@@ -125,7 +125,7 @@ boardApp.controller('BoardWriteCtrl', function($scope, $http, $routeParams, $loc
 						
 						$("input[type='file']:eq("+i+")").hide();
 		  				
-		  				$(".image_disp_layer:eq("+i+")").html("<img src=\""+file_data.thumbnail_url_130+"\" style=\"width:130;height:130\" />");
+		  				$(".image_disp_layer:eq("+i+")").html("<img src=\""+file_data.thumbnail_url_130+"\" style=\"width:130px;height:130px\" />");
 		  				$(".image_disp_layer:eq("+i+")").attr("original_image",file_data.original_url);
 		  				$(".image_disp_layer:eq("+i+")").attr("thumbnail_image_130",file_data.thumbnail_url_130);
 		  				$(".image_disp_layer:eq("+i+")").attr("thumbnail_image_200",file_data.thumbnail_url_200);
