@@ -17,16 +17,32 @@ boardApp.controller('BoardListCtrl', function($scope, $http, $location, $compile
 		$location.path('/detail/'+seq).replace();
 	};
 	
+	$scope.readMore = function($event){
+		$event.preventDefault();
+		
+		//var seq = $("#card_wrap .card-header:last").attr('board-seq');
+		var seq = $("#card_wrap .card-header").length - 1;
+		
+		get_board_list(seq);
+	};
+	
 	var get_board_list = function(seq){
 		$http({
 			method:'GET',
 			url:'/board_list.json',
-			params:{seq:0}
+			params:{start:seq}
 		}).success(function(data){
 			$scope.board_list = data.persons;
+			console.log(data.total_list);
+			console.log(data.persons.length);
+			if(data.total_list > 5 && data.persons.length > 0){
+				$('#btnReadMore').show();
+			}else{
+				$('#btnReadMore').hide();
+			}
 			
 			var template = '<div ng-repeat="board in board_list">'; 
-			template += '<div class="card-header" role="tab" id="heading_{{$index}}">';
+			template += '<div class="card-header" role="tab" id="heading_{{$index}}" board-seq="{{board.seq}}">';
 			template += '<div class="pull-right"><a href="#" class="label label-info label-fill" ng-click="detail($event, board.seq)">Update</a>';
 			template += '<a ng-click="toggleModal()" class="label label-danger label-fill">Delete</a>';
 			template += '</div>';
@@ -41,6 +57,7 @@ boardApp.controller('BoardListCtrl', function($scope, $http, $location, $compile
 			template += '</p>';
 			template += '</div>';
 			template += '</div>';
+			
 			$('#card_wrap').append($compile(template)($scope));
 		});
 	};
