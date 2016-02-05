@@ -64,15 +64,21 @@ boardApp.controller('BoardWriteCtrl', function($scope, $http, $routeParams, $loc
 		$location.path('/').replace();
 	};
 	
-	$scope.contentKeyup = function(){
+	$scope.contentKeyup = function($event){
 		if(worker != null){
 			setTimeout(function(){
-				worker.postMessage($('#content').val());
+				var workerMessage = {
+					content:$('#content').val(),
+					title:$('#title').val(),
+					name:$('#name').val()
+				};
+				worker.postMessage(workerMessage);
 			},100);
 		}
-		
-		if(window.navigator.userAgent.toLowerCase().indexOf('Firefox') <= 0){
-			checkByte($('#content').val(), 200);
+		if($event.target.id == 'content'){
+			if(window.navigator.userAgent.toLowerCase().indexOf('Firefox') <= 0){
+				checkByte($('#content').val(), 200);
+			}
 		}
 	};
 	
@@ -145,8 +151,15 @@ boardApp.controller('BoardWriteCtrl', function($scope, $http, $routeParams, $loc
 				var tempContent = window.localStorage.getItem('tempContent');
 				if(tempContent != null && $.trim(tempContent) != ''){
 					if(confirm('작성중인 내용이 있습니다.\n이어서 작성 하시겠습니까?')){
-						$scope.content = tempContent;
-						checkByte(tempContent, 200);
+						tempContent = JSON.parse(tempContent);
+						
+						$scope.title = tempContent.title;
+						$scope.name = tempContent.name;
+						$scope.content = tempContent.content;
+						
+						if($.trim(tempContent.content) != ''){
+							checkByte(tempContent.content, 200);
+						}
 					}
 					
 					//window.localStorage.removeItem('tempContent');
@@ -166,7 +179,7 @@ boardApp.controller('BoardWriteCtrl', function($scope, $http, $routeParams, $loc
 			worker = new Worker('/static/js/boardWorker.js');
 			
 			worker.onmessage = function(event){
-				window.localStorage.setItem('tempContent', event.data);
+				window.localStorage.setItem('tempContent', JSON.stringify(event.data));
 			}
 		}
 	};
