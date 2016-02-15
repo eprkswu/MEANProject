@@ -23,7 +23,7 @@ boardApp.controller('BoardListCtrl', function($scope, $http, $location, $compile
 		$event.preventDefault();
 		
 		//var seq = $("#card_wrap .card-header:last").attr('board-seq');
-		var seq = $("#card_wrap .card-header").length - 1;
+		var seq = $("#card_wrap .card-header").length;
 		
 		get_board_list(seq);
 	};
