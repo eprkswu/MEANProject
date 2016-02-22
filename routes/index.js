@@ -41,7 +41,18 @@ router.get('/face_book', function(req, res, next){
 });
 
 router.get('/face_book_render/:id', function(req, res, next){
-	res.render('facebook_render');
+	var id = req.params.id;
+	var image_url = "";
+
+	if(id % 3 == 0){
+		image_url = "http://image.bettyvelvet.me/images/thumbnail/htm_20160104103448237065_99_20160104103607_300-thumbnail.JPG";
+	}else if(id % 4 == 0){
+		image_url = "http://image.bettyvelvet.me/images/thumbnail/htm_20160104103448459474_99_20160104103607_300-thumbnail.JPG";
+	}else if(id % 5 == 0){
+		image_url = "http://image.bettyvelvet.me/images/thumbnail/htm_20160104103447789613_99_20160104103607_300-thumbnail.JPG";
+	}
+
+	res.render('facebook_render', {id:id, image_url:image_url});
 });
 
 module.exports = router;
