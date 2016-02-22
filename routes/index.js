@@ -40,7 +40,7 @@ router.get('/face_book', function(req, res, next){
 	res.render('facebook');
 });
 
-router.get('/face_book_render', function(req, res, next){
+router.get('/face_book_render/:id', function(req, res, next){
 	res.render('facebook_render');
 });
 
