@@ -51,6 +51,8 @@ router.get('/face_book_render/:id', function(req, res, next){
 		image_url = "http://image.bettyvelvet.me/images/thumbnail/htm_20160104103448459474_99_20160104103607_300-thumbnail.JPG";
 	}else if(id % 5 == 0){
 		image_url = "http://image.bettyvelvet.me/images/thumbnail/htm_20160104103447789613_99_20160104103607_300-thumbnail.JPG";
+	}else{
+		image_url = "http://image.bettyvelvet.me/images/thumbnail/htm_20160104103447981551_99_20160104103607_300-thumbnail.JPG";
 	}
 
 	res.render('facebook_render', {id:id, image_url:image_url});
