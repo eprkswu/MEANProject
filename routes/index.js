@@ -35,4 +35,13 @@ router.post('/test', function(req, res, next){
 	res.send(obj);
 });
 
+router.get('/face_book', function(req, res, next){
+
+	res.render('facebook');
+});
+
+router.get('/face_book_render', function(req, res, next){
+	res.render('facebook_render');
+});
+
 module.exports = router;
