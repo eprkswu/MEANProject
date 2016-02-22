@@ -35,9 +35,10 @@ router.post('/test', function(req, res, next){
 	res.send(obj);
 });
 
-router.get('/face_book', function(req, res, next){
+router.get('/face_book/:id', function(req, res, next){
+	var id = req.params.id;
 
-	res.render('facebook');
+	res.render('facebook', {id:id});
 });
 
 router.get('/face_book_render/:id', function(req, res, next){
