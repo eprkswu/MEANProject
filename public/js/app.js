@@ -1,13 +1,17 @@
 /**
  * http://usejsdoc.org/
  */
-var boardApp = angular.module('boardApp', ['ngRoute']);
+var boardApp = angular.module('boardApp', ['ngRoute','ngSanitize']);
 
 boardApp.config(function($routeProvider, $locationProvider){
 	$routeProvider.
 		when('/', {
 			templateUrl:'/template/list',
 			controller:'BoardListCtrl'
+		}).
+		when('/detail/:seq',{
+			templateUrl:'/template/write',
+			controller:'BoardWriteCtrl'
 		}).
 		when('/write', {
 			templateUrl:'/template/write',
@@ -43,6 +47,12 @@ boardApp.directive('modalDialog', function() {
 			};
 		},
 		template: "<div class='ng-modal' ng-show='show'><div class='ng-modal-overlay' ng-click='hideModal()'></div><div class='ng-modal-dialog' ng-style='dialogStyle'><div class='ng-modal-close' ng-click='hideModal()'>X</div><div class='ng-modal-dialog-content' ng-transclude></div></div></div>"
+	};
+});
+
+boardApp.filter('nl2br', function(){
+	return function(text){
+		return text ? text.replace(/\n/g, '<br />') : '';
 	};
 });
 

@@ -7,12 +7,8 @@ var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
 var routes2 = require('./routes/index2');
-
 var board = require('./routes/board');
-
-var users = require('./routes/users');
-
-
+var put = require('./routes/put');
 var templates = require('./routes/templates');
 
 var app = express();
@@ -33,6 +29,7 @@ app.use('/', routes);
 app.use('/', routes2);
 app.use('/', board);
 
+app.use('/put',put);
 
 app.use('/template', templates);
 
