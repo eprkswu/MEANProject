@@ -1,18 +1,46 @@
-boardApp.controller('BoardWriteCtrl', function($scope, $http, $location){
+boardApp.controller('BoardWriteCtrl', function($scope, $http, $routeParams, $location){
 	$scope.$parent.buttonName = '저장';
 	$scope.$parent.isWrite = true;
 
 	$scope.$parent.clickButton = function($event){
 		$event.preventDefault();
 		
+		var files = [];
+		
+		$('.image_disp_layer').each(function(i){
+			var _this = $(this);			
+			var file_data = {};
+			
+			if(_this.css('display') == 'block'){
+				file_data = {
+					original_url:_this.attr('original_image'),
+					thumbnail_url_130:_this.attr('thumbnail_image_130'),
+					thumbnail_url_200:_this.attr('thumbnail_image_200'),
+					thumbnail_url_300:_this.attr('thumbnail_image_300')
+				}
+				
+				files.push(file_data);
+			}
+		});
+		
 		var formData = {
 			title:$scope.title,
-			content:$scope.content
+			content:$scope.content,
+			name:$scope.name,
+			files:files
+		}
+		
+		var method = '';
+		if(typeof($routeParams.seq) != "undefined"){
+			method = 'PUT';			
+			formData.seq = $routeParams.seq;
+		}else{
+			method = 'POST';			
 		}
 		
 		$http({
-			method:'POST',
-			url:'/test',
+			method:method,
+			url:'/put/board',
 			data:formData
 		}).success(function(data){
 			if(data.code == 200){
@@ -22,9 +50,10 @@ boardApp.controller('BoardWriteCtrl', function($scope, $http, $location){
 						window.localStorage.removeItem('tempContent');
 					}
 				}
+				alert('저장이 완료 되었습니다.');
 				$location.path('/').replace();
 			}else{
-				alert('저장에 실패 하였습니다.');
+				alert('저장에 실패 하였습니다.\n'+data.message);
 			}
 		});
 	};
@@ -35,15 +64,21 @@ boardApp.controller('BoardWriteCtrl', function($scope, $http, $location){
 		$location.path('/').replace();
 	};
 	
-	$scope.contentKeyup = function(){
+	$scope.contentKeyup = function($event){
 		if(worker != null){
 			setTimeout(function(){
-				worker.postMessage($('#content').val());
+				var workerMessage = {
+					content:$('#content').val(),
+					title:$('#title').val(),
+					name:$('#name').val()
+				};
+				worker.postMessage(workerMessage);
 			},100);
 		}
-		
-		if(window.navigator.userAgent.toLowerCase().indexOf('Firefox') <= 0){
-			checkByte($('#content').val(), 200);
+		if($event.target.id == 'content'){
+			if(window.navigator.userAgent.toLowerCase().indexOf('Firefox') <= 0){
+				checkByte($('#content').val(), 200);
+			}
 		}
 	};
 	
@@ -76,15 +111,59 @@ boardApp.controller('BoardWriteCtrl', function($scope, $http, $location){
 	};
 
 	var init = function(){
-		if(typeof(Storage) != 'undefined'){
-			var tempContent = window.localStorage.getItem('tempContent');
-			if(tempContent != null && $.trim(tempContent) != ''){
-				if(confirm('작성중인 내용이 있습니다.\n이어서 작성 하시겠습니까?')){
-					$scope.content = tempContent;
-					checkByte(tempContent, 200);
+		if(typeof($routeParams.seq) != "undefined"){
+			$http({
+				method:'GET',
+				url:'/board_detail.json',
+				params:{seq:$routeParams.seq}
+			}).success(function(data){
+				if(data.length > 0){
+					var detail_content = data[0];
+					
+					$scope.title = detail_content.title;
+					$scope.content = detail_content.content;
+					$scope.name = detail_content.name;
+					
+					var files = detail_content.files;
+					
+					$.each(files, function(i){
+						var file_data = files[i];
+						
+						$("input[type='file']:eq("+i+")").hide();
+		  				
+		  				$(".image_disp_layer:eq("+i+")").html("<img src=\""+file_data.thumbnail_url_130+"\" style=\"width:130px;\" />");
+		  				$(".image_disp_layer:eq("+i+")").attr("original_image",file_data.original_url);
+		  				$(".image_disp_layer:eq("+i+")").attr("thumbnail_image_130",file_data.thumbnail_url_130);
+		  				$(".image_disp_layer:eq("+i+")").attr("thumbnail_image_200",file_data.thumbnail_url_200);
+		  				$(".image_disp_layer:eq("+i+")").attr("thumbnail_image_300",file_data.thumbnail_url_300);
+		  				$(".image_disp_layer:eq("+i+")").show();
+					});
+					
+					$("input[type='file']").each(function(i){
+			  			if($(this).css("display") == "none"){
+			  				$(this).remove();
+			  			}
+			  		});
 				}
-				
-				//window.localStorage.removeItem('tempContent');
+			});
+		}else{
+			if(typeof(Storage) != 'undefined'){
+				var tempContent = window.localStorage.getItem('tempContent');
+				if(tempContent != null && $.trim(tempContent) != ''){
+					if(confirm('작성중인 내용이 있습니다.\n이어서 작성 하시겠습니까?')){
+						tempContent = JSON.parse(tempContent);
+						
+						$scope.title = tempContent.title;
+						$scope.name = tempContent.name;
+						$scope.content = tempContent.content;
+						
+						if($.trim(tempContent.content) != ''){
+							checkByte(tempContent.content, 200);
+						}
+					}
+					
+					//window.localStorage.removeItem('tempContent');
+				}
 			}
 		}
 		
@@ -100,7 +179,7 @@ boardApp.controller('BoardWriteCtrl', function($scope, $http, $location){
 			worker = new Worker('/static/js/boardWorker.js');
 			
 			worker.onmessage = function(event){
-				window.localStorage.setItem('tempContent', event.data);
+				window.localStorage.setItem('tempContent', JSON.stringify(event.data));
 			}
 		}
 	};

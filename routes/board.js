@@ -28,7 +28,7 @@ router.get('/board_list.json', function(req, res, next){
 	client.connect('mongodb://54.249.83.123:27017/newDB', function(err, db){
 
 		//board 테이블 접근후 seq 로 오름 차순 정렬 후 페이징
-		var cursor = db.collection('board').find().sort({seq:-1}).skip(parseInt(start)).limit(10)
+		var cursor = db.collection('board').find().sort({seq:-1}).skip(parseInt(start)).limit(5)
 
 		//게시판 카운팅
 		db.collection('board').count(function (err,count){

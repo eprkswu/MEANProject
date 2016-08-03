@@ -1,0 +1,41 @@
+<html>
+<head>
+
+</head>
+<body>
+<input type="button" id="btnShare" value="공유하기" />
+<script type="text/javascript" src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+<script type="text/javascript">
+    $(function(){
+        $("#btnShare").click(function(){
+            FB.ui({
+                method : "share",
+                href : "http://bettyvelvet.me/face_book_render2/<%=id%>"
+            }, function(response){
+                if(response && !response.error_message){
+                    alert("Posting Completed.");
+                }else{
+                    alert("Error while posting\n" +  response.error_message);
+                }
+            });
+        });
+    });
+
+    window.fbAsyncInit = function(){
+        FB.init({
+            appId   : '1550751988570262',
+            xfbml   : true,
+            version : 'v2.5'
+        });
+    };
+
+    (function(d, s, id){
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if(d.getElementById(id)){return;};
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+</script>
+</body>
+</html>
